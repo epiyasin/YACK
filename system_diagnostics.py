@@ -73,6 +73,9 @@ def max_safe_matrix_size(dtype_size=4):
     return max_size
 
 def print_system_info():
+    # Clear the console
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
     # Print the number of CPU core sets that will be tested
     cpu_cores = get_cpu_cores(os.cpu_count())
     if settings.debug:
@@ -116,7 +119,8 @@ def print_system_info():
     for i in range(5, 0, -1):
         print(f"\rStarting benchmarking in: {i}", end='', flush=True)
         time.sleep(1)
-    print("\n")  # Move to the next line after the countdown completes
+
+    print("\rStarting benchmarking now...") 
 
     print("\nWarning: Temperature-based throttling checks are not enabled on Windows.")
     
