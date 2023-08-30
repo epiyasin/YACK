@@ -102,7 +102,7 @@ def print_system_info():
     sizes_to_test = [2 ** i for i in range(int(np.log2(settings.min_matrix_size)), int(np.log2(max_matrix)) + 1)]
 
     if settings.debug:
-        sizes_to_test = sizes_to_test[-5:-2]  # Get the 3 elements 2nd of preceding the last one
+        sizes_to_test = settings.sizes_to_test
         print(f"DEBUG MODE: Testing only the following matrix sizes: {sizes_to_test}")
 
     print(f"Matrix sizes to be tested: {sizes_to_test}")
@@ -112,9 +112,12 @@ def print_system_info():
     print("\nPlease close as many programs as possible to minimize external load on the CPU cores.")
     input("\nOnce ready, press Enter to continue...") 
 
+    # Countdown from 5 to 0
+    for i in range(5, 0, -1):
+        print(f"\rStarting benchmarking in: {i}", end='', flush=True)
+        time.sleep(1)
+    print("\n")  # Move to the next line after the countdown completes
+
     print("\nWarning: Temperature-based throttling checks are not enabled on Windows.")
-    print("The script will proceed without them.")
-    print("Please ensure your system remains cool during the tests.\n")
-    time.sleep(5)  # Pause for 5 seconds
     
     return cpu_cores, sizes_to_test
