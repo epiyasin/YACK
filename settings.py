@@ -11,5 +11,3 @@ class Settings:
     debug_cores: tuple = (1, 2, 4, 8)
     figure_size: tuple = (8, 6)
     num_runs: int = 5
- 
-settings = Settings()
