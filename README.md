@@ -16,7 +16,7 @@ This program benchmarks matrix multiplication performance on both CPU and GPU. I
 ### 1. Clone the repository:
 
 ```bash
-git clone [YOUR_REPOSITORY_LINK]
+git clone [YACK](https://github.com/epiyasin/YACK.git)
 ```
 ### 2. Navigate to the repository directory:
 
