@@ -66,7 +66,7 @@ def benchmark(cpu_cores, sizes_to_test):
         for cores in cpu_cores:
             if cores < os.cpu_count():  # Leave at least one core free
                 run_times = []
-                for _ in range(num_runs):
+                for _ in tqdm(range(num_runs), disable=not settings.testing, desc=f"Runs on CPU {cores} cores"):
                     run_times.append(matrix_mult_on_cpu(size, cores))
                 results_cpu[size].append(run_times)
 
@@ -76,7 +76,7 @@ def benchmark(cpu_cores, sizes_to_test):
                 print(f"  Using {cores} CPU cores. Min: {min_time:.6f} sec, Max: {max_time:.6f} sec, Avg: {avg_time:.6f} sec.")
 
         run_times_gpu = []
-        for _ in range(settings.num_runs):
+        for _ in tqdm(range(settings.num_runs), disable=not settings.testing, desc="Runs on GPU"):
             run_times_gpu.append(matrix_mult_on_gpu(size))
         results_gpu[size] = run_times_gpu
 
