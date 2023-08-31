@@ -2,9 +2,10 @@
  
 This program benchmarks matrix multiplication performance on both CPU and GPU. It checks the performance based on the number of CPU cores and varying matrix sizes. The results are then plotted for visualization.
 
-📋 Table of Contents
+## 📋 Table of Contents
 
 - [🐃 YACK - Yet Another Core Kinetoscope](#-yack---yet-another-core-kinetoscope)
+	- [📋 Table of Contents](#-table-of-contents)
 	- [📦 Requirements](#-requirements)
 	- [🛠 Installation](#-installation)
 		- [1. Clone the repository:](#1-clone-the-repository)
