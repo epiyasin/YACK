@@ -4,13 +4,17 @@ This program benchmarks matrix multiplication performance on both CPU and GPU. I
 
 📋 Table of Contents
 
-- [Requirements](#📦-requirements)
-- Installation
-- Configuration
-- Usage
-- Overview of Modules
-- [Notes](#-notes)
-- Contributing
+- [🐃 YACK - Yet Another Core Kinetoscope](#-yack---yet-another-core-kinetoscope)
+	- [📦 Requirements](#-requirements)
+	- [🛠 Installation](#-installation)
+		- [1. Clone the repository:](#1-clone-the-repository)
+		- [2. Navigate to the repository directory:](#2-navigate-to-the-repository-directory)
+		- [3. Install the required packages:](#3-install-the-required-packages)
+	- [⚙ Configuration](#-configuration)
+	- [🚀 Usage](#-usage)
+	- [🔍 Overview of Modules](#-overview-of-modules)
+	- [🔔 Notes](#-notes)
+	- [🤝 Contributing](#-contributing)
 
 ## 📦 Requirements
 
