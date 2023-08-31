@@ -1,4 +1,4 @@
-# YACK - Yet Another Core Kinetoscope
+# 🐃 YACK - Yet Another Core Kinetoscope
  
 This program benchmarks matrix multiplication performance on both CPU and GPU. It checks the performance based on the number of CPU cores and varying matrix sizes. The results are then plotted for visualization.
 
