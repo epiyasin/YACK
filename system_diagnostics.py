@@ -72,14 +72,29 @@ def max_safe_matrix_size(dtype_size=4):
     max_size = int((ram_gb * (1024 ** 3) / (3 * dtype_size)) ** 0.5)
     return max_size
 
-def print_system_info():
-    # Clear the console
-    os.system('cls' if os.name == 'nt' else 'clear')
-    
-    # Print the number of CPU core sets that will be tested
+def get_system_info():
     cpu_cores = get_cpu_cores(os.cpu_count())
     if settings.debug:
         cpu_cores = [core for core in cpu_cores if core in settings.debug_cores]
+
+    total_ram = psutil.virtual_memory().total / (1024 ** 3)  # Convert to GB
+    max_matrix = max_safe_matrix_size()
+    sizes_to_test = [2 ** i for i in range(int(np.log2(settings.min_matrix_size)), int(np.log2(max_matrix)) + 1)]
+
+    if settings.debug:
+        sizes_to_test = settings.sizes_to_test
+
+    return cpu_cores, sizes_to_test, total_ram
+
+def print_system_info():
+    # Clear the console
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+    # Get system info
+    cpu_cores, sizes_to_test, total_ram = get_system_info()
+    
+    # Print the number of CPU core sets that will be tested
+    if settings.debug:
         print(f"DEBUG MODE: Testing only the following CPU cores: {cpu_cores}")
     
     print(f"Total CPU cores available: {os.cpu_count()}")
@@ -94,18 +109,12 @@ def print_system_info():
             print("Unable to detect the total number of CUDA cores on the GPU.")
 
     # Print total RAM available
-    total_ram = psutil.virtual_memory().total / (1024 ** 3)  # Convert to GB
     ram_for_benchmark = total_ram * settings.safety_factor  # Considering the safety factor
-
     print(f"Total RAM available: {total_ram:.2f} GB")
     print(f"Total RAM to be used for the benchmark: {ram_for_benchmark:.2f} GB")
 
     # Print matrix sizes that will be tested
-    max_matrix = max_safe_matrix_size()
-    sizes_to_test = [2 ** i for i in range(int(np.log2(settings.min_matrix_size)), int(np.log2(max_matrix)) + 1)]
-
     if settings.debug:
-        sizes_to_test = settings.sizes_to_test
         print(f"DEBUG MODE: Testing only the following matrix sizes: {sizes_to_test}")
 
     print(f"Matrix sizes to be tested: {sizes_to_test}")

@@ -1,14 +1,20 @@
 import system_diagnostics
 import benchmarking
 import plotting
+import utils
 from settings import Settings
 
 settings = Settings()
 
 def main():
-    cpu_cores, sizes_to_test = system_diagnostics.print_system_info()
-    results_cpu, results_gpu = benchmarking.benchmark(cpu_cores, sizes_to_test)
-    plotting.plotting(results_cpu, results_gpu, cpu_cores)
-    
+    choice = utils.get_user_choice()
+
+    if choice == 'load':
+        utils.handle_load_choice()
+    elif choice == 'run':
+        utils.handle_run_choice()
+    else:
+        print("Invalid choice. Please enter 'run' or 'load'.")
+
 if __name__ == "__main__":
-	main()
+    main()
