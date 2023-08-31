@@ -4,12 +4,12 @@ This program benchmarks matrix multiplication performance on both CPU and GPU. I
 
 📋 Table of Contents
 
-- [Requirements](#requirements)
+- [Requirements](#📦-requirements)
 - Installation
 - Configuration
 - Usage
 - Overview of Modules
-- Notes
+- [Notes](#🔔-notes)
 - Contributing
 
 ## 📦 Requirements
