@@ -3,6 +3,9 @@ import csv
 import random
 import string
 import time
+import benchmarking
+import system_diagnostics
+import plotting
 from settings import Settings
 
 settings = Settings()
@@ -65,3 +68,45 @@ def load_csv(filename, directory):
                 results_gpu[int(size)] = [float(min_time), float(avg_time), float(max_time)]
                 
     return results_cpu, results_gpu
+
+def get_user_choice():
+    return input("Do you want to run a new benchmark or load a saved one? (Enter 'run' or 'load'): ").lower()
+
+def handle_load_choice():
+    cpu_cores, _ = system_diagnostics.get_system_info()[:2]
+    directory = "DEBUG_benchmark" if settings.debug else "RUNTIME_benchmark"
+    saved_benchmarks = list_saved_benchmarks(directory)
+
+    if not saved_benchmarks:
+        print("No benchmarks found. Running a new benchmark.")
+        return 'run'
+    
+    print("List of saved benchmarks:")
+    for i, name in enumerate(saved_benchmarks):
+        print(f"{i + 1}. {name}")
+
+    while True:
+        benchmark_choice = input("Enter the number of the benchmark you want to load, or type the name of the csv: ")
+        if benchmark_choice.isdigit():
+            benchmark_choice = int(benchmark_choice)
+            if 1 <= benchmark_choice <= len(saved_benchmarks):
+                filename = saved_benchmarks[benchmark_choice - 1]
+                break
+            else:
+                print(f"Invalid choice. Please choose a number between 1 and {len(saved_benchmarks)}.")
+        else:
+            filename = benchmark_choice
+            if filename in saved_benchmarks:
+                break
+            else:
+                print("Invalid filename. Please choose from the list.")
+
+    results_cpu, results_gpu = load_csv(filename, directory)
+    plotting.plotting(results_cpu, results_gpu, cpu_cores)
+
+def handle_run_choice():
+    cpu_cores, sizes_to_test, _ = system_diagnostics.get_system_info()
+    system_diagnostics.print_system_info()
+    results_cpu, results_gpu = benchmarking.benchmark(cpu_cores, sizes_to_test)
+    save_csv(results_cpu, results_gpu, cpu_cores)
+    plotting.plotting(results_cpu, results_gpu, cpu_cores)
