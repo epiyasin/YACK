@@ -75,12 +75,19 @@ def get_user_choice():
 def handle_load_choice():
     cpu_cores, _ = system_diagnostics.get_system_info()[:2]
     directory = "DEBUG_benchmark" if settings.debug else "RUNTIME_benchmark"
+    
+    # Check if directory exists
+    if not os.path.exists(directory):
+        print(f"Directory '{directory}' does not exist.")
+        return handle_no_benchmark_directory()
+
     saved_benchmarks = list_saved_benchmarks(directory)
 
+    # Check if directory is empty
     if not saved_benchmarks:
-        print("No benchmarks found. Running a new benchmark.")
-        return 'run'
-    
+        print("No benchmarks found in the directory.")
+        return handle_no_benchmark_directory()
+
     print("List of saved benchmarks:")
     for i, name in enumerate(saved_benchmarks):
         print(f"{i + 1}. {name}")
@@ -110,3 +117,11 @@ def handle_run_choice():
     results_cpu, results_gpu = benchmarking.benchmark(cpu_cores, sizes_to_test)
     save_csv(results_cpu, results_gpu, cpu_cores)
     plotting.plotting(results_cpu, results_gpu, cpu_cores)
+
+def handle_no_benchmark_directory():
+    choice = input("No benchmarks are available to load. Would you like to run a new benchmark instead? (Enter 'yes' or 'no'): ").lower()
+    if choice == 'yes':
+        handle_run_choice()
+    else:
+        print("Exiting program.")
+        exit()  # exits the program
